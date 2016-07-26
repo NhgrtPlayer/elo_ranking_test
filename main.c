@@ -20,6 +20,7 @@ main()
   add_player(root, "Lyn", 1000, 32);
   give_me_info(root, "Lucina");
   give_me_info(root, "Lyn");
+  let_them_fight(root, "Lyn", "Lucina");
   give_me_info(root, "Lucina");
   give_me_info(root, "Lyn");
   delete_list(root);

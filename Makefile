@@ -13,7 +13,6 @@ NAME	= elo_rank
 SRCS	= main.c \
 	  list.c \
 	  rank.c \
-	  utils/my_putchar_putstr.c \
 	  utils/my_strcmp.c
 
 OBJS	= $(SRCS:.c=.o)

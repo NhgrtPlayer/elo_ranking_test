@@ -20,7 +20,7 @@
  void	remove_player(t_list *);
 
  void	give_new_elo(t_list *, t_list *);
- void	let_them_fight(t_list *, char *, char *);
+ int	let_them_fight(t_list *, char *, char *);
  int	give_me_info(t_list *, char *);
 
 #endif /* !MAIN_H_ */
