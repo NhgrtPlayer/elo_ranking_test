@@ -1,20 +1,19 @@
 /*
-** main.c for  in /home/player/Programmes perso/elo_prog
+** main.c
 **
-** Made by Merwan Lara
-** Login   <player@epitech.net>
-**
-** Started on  Mon Jul 25 23:20:23 2016 Merwan Lara
-** Last update Tue Jul 26 12:31:57 2016 Merwan Lara
+** *******************************
+** ***CODE MADE BY NHGRTPLAYER ***
+** *******************************
 */
 
 #include <stdio.h>
 #include "main.h"
 #include "rank.h"
 
-int	main()
+int
+main()
 {
-  t_list	*root;
+  t_list *root;
 
   root = create_list();
   add_player(root, "Lucina", 1000, 32);

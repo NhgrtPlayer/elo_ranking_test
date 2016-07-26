@@ -1,11 +1,9 @@
 /*
-** rank.c for  in /home/player/Programmes perso/elo_prog/
+** rank.c
 **
-** Made by Merwan Lara
-** Login   <lara_m@epitech.net>
-**
-** Started on  Mon Jul 25 23:57:07 2016 Merwan Lara
-** Last update Tue Jul 26 12:49:41 2016 Merwan Lara
+** *******************************
+** ***CODE MADE BY NHGRTPLAYER ***
+** *******************************
 */
 
 #include <math.h>

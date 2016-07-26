@@ -1,11 +1,7 @@
 ##
-## Makefile for  in /home/player/Programmes perso/elo_prog
-## 
-## Made by Merwan Lara
-## Login   <player@epitech.net>
-## 
-## Started on  Tue Jul 26 00:31:21 2016 Merwan Lara
-## Last update Tue Jul 26 01:15:30 2016 Merwan Lara
+## Makefile
+##
+## Made by NhgrtPlayer
 ##
 
 CC	= gcc

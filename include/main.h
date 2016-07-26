@@ -1,11 +1,9 @@
 /*
-** main.h for  in /home/player/Programmes perso/elo_prog/include/
+** main.h
 **
-** Made by Merwan Lara
-** Login   <lara_m@epitech.net>
-**
-** Started on  Tue Jul 26 00:27:13 2016 Merwan Lara
-** Last update Tue Jul 26 01:47:09 2016 Merwan Lara
+** *******************************
+** ***CODE MADE BY NHGRTPLAYER ***
+** *******************************
 */
 
 #ifndef MAIN_H_
