@@ -11,6 +11,10 @@
 #include <string.h>
 #include "rank.h"
 
+/*
+** Creates the double-circular buffer
+** Returns NULL if malloc() fails, otherwise returns the root
+*/
 t_list
 *create_list(void)
 {
@@ -27,6 +31,7 @@ t_list
   return (root);
 }
 
+/* Deletes the buffer */
 void
 delete_list(t_list	*root)
 {
@@ -45,6 +50,11 @@ delete_list(t_list	*root)
   root = NULL;
 }
 
+/*
+** Adds a player in the buffer
+** TODO: Test the name/elo/coeff given to the function
+** Returns -1 if malloc() or strdup() fails, otherwise returns 0
+*/
 int
 add_player(t_list	*root,
 	   char		*name,
@@ -53,9 +63,9 @@ add_player(t_list	*root,
 {
   t_list *new_elem;
 
-  if ((new_elem = malloc(sizeof(*new_elem))) == NULL)
+  if ((new_elem = malloc(sizeof(*new_elem))) == NULL
+      || (new_elem->name = strdup(name)) == NULL)
     return (-1);
-  new_elem->name = strdup(name);
   new_elem->elo = elo;
   new_elem->k_coef = k_coef;
   new_elem->player_id = root->prev->player_id + 1;
@@ -66,6 +76,7 @@ add_player(t_list	*root,
   return (0);
 }
 
+/* Removes a player in the list, not finished */
 void
 remove_player(t_list	*player)
 {

@@ -4,3 +4,5 @@ This program allows you to create a ranking list full of players with a starting
 The elo will change based on wins and defeat with a graphical interface.
 
 All of the players are saved in a Double-Circular Buffer.
+
+If you download the source, just use the 'make' rule and you're good

@@ -11,21 +11,28 @@
 #include "main.h"
 #include "rank.h"
 
+/*
+** Calculates the new elo for the winner and the loser based on their current elo
+*/
 void
 give_new_elo(t_list	*winner,
 	     t_list	*loser)
 {
-  int	elo_diff;
+  int elo_diff;
   double prob;
 
   elo_diff = winner->elo - loser->elo;
   prob = 1 / (1 + pow(10, (elo_diff * (-1)) / 400));
   winner->elo = winner->elo + (winner->k_coef * (WIN_VAR - prob));
-  elo_diff = loser->elo - winner->elo;
+  elo_diff *= (-1);
   prob = 1 / (1 + pow(10, (elo_diff * (-1)) / 400));
   loser->elo = loser->elo + (loser->k_coef * (LOSE_VAR - prob));
 }
 
+/*
+** Simulates the outcome of a fight between the 2nd parameter and 3rd one
+** returns -1 if one of the player isn't found, otherwise returns 0
+*/
 int
 let_them_fight(t_list	*root,
 	       char	*winner_name,
@@ -56,6 +63,11 @@ let_them_fight(t_list	*root,
   return (-1);
 }
 
+/*
+** Prints the informations of the given player
+** Returns -1 if the player couldn't have been found
+** (prints a message on the error output as well)
+*/
 int
 give_me_info(t_list	*root,
 	     char	*name)
@@ -77,6 +89,6 @@ give_me_info(t_list	*root,
 	}
       it = next;
     }
-  printf("Player %s couldn't have been find\n", name);
-  return (1);
+  fprintf(stderr, "Player %s couldn't have been find\n", name);
+  return (-1);
 }
