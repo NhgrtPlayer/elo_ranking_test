@@ -25,7 +25,7 @@ main()
   /*
   ** Lyn battles vs Lucina and, of course, wins <3
   ** (The winner is expected as the 2nd parameter and the loser as the 3rd one)
-  ** Their elo is updated, the exact formula for the new elo is written on rank.c
+  ** Their elo is updated, the exact formula for the new elo is written in rank.c
   */
   give_me_info(root, "Lucina");
   give_me_info(root, "Lyn");
