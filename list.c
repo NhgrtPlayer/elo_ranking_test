@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "main.h"
 #include "rank.h"
 
 /*
@@ -31,7 +32,37 @@ t_list
   return (root);
 }
 
-/* Deletes the buffer */
+
+/* Removes a player in the list */
+int
+remove_player(t_list	*root,
+	      char	*name)
+{
+  t_list *it,
+  	 *next;
+
+  it = root->next;
+  while (it != root)
+    {
+      next = it->next;
+      if (my_strcmp(it->name, name) == 1)
+	{
+	  it->prev->next = it->next;
+	  it->next->prev = it->prev;
+	  free(it->name);
+	  free(it);
+	  return (0);
+	}
+      it = next;
+    }
+  fprintf(stderr, "Player %s couldn't have been find\n", name);
+  return (-1);
+}
+
+/*
+** Deletes the buffer
+** We are not using remove_player() in order to buy some time
+*/
 void
 delete_list(t_list	*root)
 {
@@ -74,13 +105,4 @@ add_player(t_list	*root,
   root->prev->next = new_elem;
   root->prev = new_elem;
   return (0);
-}
-
-/* Removes a player in the list, not finished */
-void
-remove_player(t_list	*player)
-{
-  player->prev->next = player->next;
-  player->next->prev = player->prev;
-  free(player);
 }

@@ -17,7 +17,7 @@
  t_list	*create_list();
  void	delete_list(t_list *);
  int	add_player(t_list *, char *, int, int);
- void	remove_player(t_list *);
+ int	remove_player(t_list *, char *);
 
  void	give_new_elo(t_list *, t_list *);
  int	let_them_fight(t_list *, char *, char *);
