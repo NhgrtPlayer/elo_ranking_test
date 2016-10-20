@@ -1,4 +1,3 @@
-## Elo Ranking Generator
 ##
 ## Makefile
 ##
@@ -9,18 +8,15 @@ CC	= gcc
 
 RM	= rm -f
 
-NAME	= elo_rank
+NAME	= test_gui
 
-SRCS	= main.c \
-	  list.c \
-	  rank.c \
-	  utils/my_strcmp.c
+SRCS	= test.c
 
 OBJS	= $(SRCS:.c=.o)
 
-CFLAGS	= -W -Wall -Werror -I include
+CFLAGS	= -W -Wall -Werror -I include `pkg-config --cflags gtk+-3.0`
 
-LDFLAGS	= -lm
+LDFLAGS	= `pkg-config --libs gtk+-3.0`
 
 all: $(NAME)
 

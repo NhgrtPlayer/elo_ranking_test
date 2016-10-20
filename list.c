@@ -1,4 +1,6 @@
 /*
+** Elo Ranking Generator
+**
 ** list.c
 **
 ** *******************************
@@ -31,7 +33,6 @@ t_list
   root->next = root;
   return (root);
 }
-
 
 /* Removes a player in the list */
 int

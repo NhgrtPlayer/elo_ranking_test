@@ -1,4 +1,6 @@
 /*
+** Elo Ranking Generator
+**
 ** my_strcmp.c
 **
 ** *******************************

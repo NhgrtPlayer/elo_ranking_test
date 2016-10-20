@@ -1,4 +1,6 @@
 /*
+** Elo Ranking Generator
+**
 ** main.c
 **
 ** *******************************
@@ -23,8 +25,8 @@ main()
   /* We print the informations of our players */
   let_them_fight(root, "Lyn", "Lucina");
   /*
-  ** Lyn battles vs Lucina and, of course, wins <3
-  ** (The winner is expected as the 2nd parameter and the loser as the 3rd one)
+  ** Lyn fights Lucina and, of course, wins <3
+  ** (The winner is expected to be the 2nd parameter and the loser to be the 3rd one)
   ** Their elo is updated, the exact formula for the new elo is written in rank.c
   */
   give_me_info(root, "Lucina");
