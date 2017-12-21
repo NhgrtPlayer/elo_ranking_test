@@ -1,26 +1,17 @@
-## Elo Ranking Generator
-##
-## Makefile
-##
-## Made by NhgrtPlayer
-##
-
-CC	= gcc
+CC	= g++
 
 RM	= rm -f
 
 NAME	= elo_rank
 
-SRCS	= main.c \
-	  list.c \
-	  rank.c \
-	  utils/my_strcmp.c
+SRCS	= main.cpp \
+	  Player.cpp
 
-OBJS	= $(SRCS:.c=.o)
+OBJS	= $(SRCS:.cpp=.o)
 
 CFLAGS	= -W -Wall -Werror -I include
 
-LDFLAGS	= -lm
+LDFLAGS	= 
 
 all: $(NAME)
 

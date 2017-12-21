@@ -41,6 +41,6 @@ void Player::setKCoeff(int newKCoeff)
 std::ostream &operator << (std::ostream& lhs, const Player& rhs)
 {
 	lhs << '"' << rhs.getName() << "\" [" <<  rhs.getID() << "] - ";
-	lhs << rhs.getElo() << " (" << rhs.getKCoeff() <<")";
+	lhs << rhs.getElo() << " (" << rhs.getKCoeff() << ')';
 	return (lhs);
 }
