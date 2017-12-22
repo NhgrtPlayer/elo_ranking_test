@@ -1,3 +1,10 @@
+/*
+** Made by NhgrtPlayer (⌐■_■)
+**
+** Beyond the Brain
+** 4♦
+*/
+
 #include "Player.hpp"
 
 Player::Player(const std::string& name, int id, int elo, int k_coeff) : 

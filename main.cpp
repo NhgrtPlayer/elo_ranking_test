@@ -1,3 +1,10 @@
+/*
+** Made by NhgrtPlayer (⌐■_■)
+**
+** Beyond the Brain
+** 4♦
+*/
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -64,14 +71,14 @@ int main(int argc, char const *argv[])
 {
 	std::vector<Player> players_list;
 
-	players_list.push_back(Player("Wolfy", players_list.size(), 800, 40));
-	players_list.push_back(Player("Rog", players_list.size(), 1000, 40));
+	players_list.push_back(Player("Wolfy", players_list.size() + 1, 800, 40));
+	players_list.push_back(Player("Rog", players_list.size() + 1, 1000, 40));
 	for (auto const &e : players_list)
 	{
 		std::cout << e << '\n';
 	}
 	update_elo(players_list[0], players_list[1]);
-	players_list.push_back(Player("Test", players_list.size(), 969, 40));
+	players_list.push_back(Player("Test", players_list.size() + 1, 969, 40));
 	sort_ranking(players_list);
 	print_ranking(players_list);
 	return (0);

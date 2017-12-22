@@ -1,3 +1,10 @@
+/*
+** Made by NhgrtPlayer (⌐■_■)
+**
+** Beyond the Brain
+** 4♦
+*/
+
 #ifndef PLAYER_HPP_
 #define PLAYER_HPP_
 

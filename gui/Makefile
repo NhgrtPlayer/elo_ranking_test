@@ -2,19 +2,22 @@
 ## Makefile
 ##
 ## Made by NhgrtPlayer
+## (⌐■_■)
+##
+## Beyond the Brain
 ##
 
-CC	= gcc
+CC	= g++
 
 RM	= rm -f
 
 NAME	= test_gui
 
-SRCS	= test.c
+SRCS	= test.cpp
 
-OBJS	= $(SRCS:.c=.o)
+OBJS	= $(SRCS:.cpp=.o)
 
-CFLAGS	= -W -Wall -Werror -I include `pkg-config --cflags gtk+-3.0`
+CPPFLAGS += -W -Wall -Werror -I include
 
 LDFLAGS	= `pkg-config --libs gtk+-3.0`
 
