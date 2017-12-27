@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <cmath>
@@ -50,8 +51,7 @@ void print_ranking(const std::vector<Player>& vec)
 ** NEW ELO = CURRENT ELO + K * (W - p(D))
 ** K = K COEFFICIENT
 ** W = CONSTANT VARIABLE (WIN = 1, LOSE = 0, DRAW = 0.5)
-** p(D) = Win probabiliy
-** p(D) = 1 / (1 + 10^(-D / 400))
+** p(D) = Win probabiliy = 1 / (1 + 10^(-D / 400))
 ** D = Elo difference (Elo of current player - Elo of opponent (ie. 800 - 1000 = D = -200))
 */
 
@@ -67,18 +67,32 @@ void update_elo(Player& winner, Player& loser)
 	loser.setElo(loser.getElo() + (loser.getKCoeff() * (LOSE_VAR - prob)));
 }
 
+int export_ranking(const std::vector<Player>& vec, const std::string& filename)
+{
+	std::ofstream file(filename);
+
+	if (!file.is_open())
+		return (-1);
+	for (auto const &e : vec)
+	{
+		file << e.getName() << ';' << e.getElo() << ';' << e.getKCoeff() << '\n';
+	}
+	file.close();
+	return (0);
+}
+
 int main(int argc, char const *argv[])
 {
 	std::vector<Player> players_list;
 
-	players_list.push_back(Player("Wolfy", players_list.size() + 1, 800, 40));
-	players_list.push_back(Player("Rog", players_list.size() + 1, 1000, 40));
+	players_list.push_back(Player("Wolfy", players_list.size(), 800, 40));
+	players_list.push_back(Player("Rog", players_list.size(), 1000, 40));
 	for (auto const &e : players_list)
 	{
 		std::cout << e << '\n';
 	}
-	update_elo(players_list[0], players_list[1]);
-	players_list.push_back(Player("Test", players_list.size() + 1, 969, 40));
+	update_elo(players_list[0], players_list[1]); // 0 wins vs 1
+	players_list.push_back(Player("Test", players_list.size(), 969, 40));
 	sort_ranking(players_list);
 	print_ranking(players_list);
 	return (0);
