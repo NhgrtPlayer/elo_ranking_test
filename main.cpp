@@ -67,6 +67,7 @@ void update_elo(Player& winner, Player& loser)
 	loser.setElo(loser.getElo() + (loser.getKCoeff() * (LOSE_VAR - prob)));
 }
 
+// Export vector in the "name;elo;kcoeff\n" format
 int export_ranking(const std::vector<Player>& vec, const std::string& filename)
 {
 	std::ofstream file(filename);
