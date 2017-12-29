@@ -1,6 +1,7 @@
-#include <gtkmm/application.h>
+/*#include <gtkmm/application.h>
 #include <gtkmm/button.h>
-#include <gtkmm/window.h>
+#include <gtkmm/window.h>*/
+#include <gtkmm.h>
 #include <iostream>
 
 class MainWindow : public Gtk::Window
@@ -10,7 +11,10 @@ protected:
   void new_player_button_clicked();
 
   //Member widgets:
-  Gtk::Button new_player_button;
+  Gtk::Box VBox;
+  Gtk::Box HBox;
+  Gtk::Entry new_player_name;
+  Gtk::Button new_player_confirm_button;
 
 public:
   MainWindow();
@@ -18,22 +22,30 @@ public:
 
 };
 
-MainWindow::MainWindow()
-: new_player_button("New Player")   // creates a new button with label "Hello World".
+MainWindow::MainWindow() :
+  VBox(Gtk::ORIENTATION_VERTICAL),
+  new_player_confirm_button("Add New Player")   // creates a new button with label "Hello World".
 {
   // Sets the border width of the window.
   Gtk::Window::set_border_width(10);
+  Gtk::Window::set_title("Add a new Player");
 
   // When the button receives the "clicked" signal, it will call the
   // on_button_clicked() method defined below.
-  new_player_button.signal_clicked().connect(sigc::mem_fun(*this,
+  new_player_confirm_button.signal_clicked().connect(sigc::mem_fun(*this,
               &MainWindow::new_player_button_clicked));
 
+  new_player_name.set_text("New Player Name");
   // This packs the button into the Window (a container).
-  Gtk::Window::add(new_player_button);
+  VBox.add(new_player_name);
+  HBox.add(new_player_confirm_button);
+  VBox.add(HBox);
+  Gtk::Window::add(VBox);
 
   // The final step is to display this newly created widget...
-  new_player_button.show();
+  // new_player_confirm_button.show();
+  // new_player_name.show();
+  Gtk::Window::show_all_children();
 }
 
 void MainWindow::new_player_button_clicked()

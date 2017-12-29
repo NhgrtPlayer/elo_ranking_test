@@ -13,13 +13,14 @@ RM	= rm -f
 
 NAME	= test_gui
 
-SRCS	= test.cpp
+SRCS	= main_window.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CPPFLAGS += -W -Wall -Werror -I include
+CPPFLAGS += -std=c++14 -W -Wall -I include
+CPPFLAGS += `pkg-config --cflags gtkmm-3.0`
 
-LDFLAGS	= `pkg-config --libs gtk+-3.0`
+LDFLAGS	= `pkg-config --libs gtkmm-3.0`
 
 all: $(NAME)
 
