@@ -13,7 +13,7 @@ RM	= rm -f
 
 NAME	= test_gui
 
-SRCS	= main_window.cpp
+SRCS	= new_player_window.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 

@@ -4,7 +4,7 @@
 #include <gtkmm.h>
 #include <iostream>
 
-class MainWindow : public Gtk::Window
+class NewPlayerWindow : public Gtk::Window
 {
 protected:
   //Signal handlers:
@@ -12,19 +12,20 @@ protected:
 
   //Member widgets:
   Gtk::Box VBox;
-  Gtk::Box HBox;
+  Gtk::Box HBox_entries;
+  Gtk::Box HBox_confirm_button;
   Gtk::Entry new_player_name_entry;
   Gtk::Entry new_player_elo_entry;
   Gtk::Entry new_player_kcoeff_entry;
   Gtk::Button new_player_confirm_button;
 
 public:
-  MainWindow();
-  virtual ~MainWindow() {}
+  NewPlayerWindow();
+  virtual ~NewPlayerWindow() {}
 
 };
 
-MainWindow::MainWindow() :
+NewPlayerWindow::NewPlayerWindow() :
   VBox(Gtk::ORIENTATION_VERTICAL),
   new_player_confirm_button("Add New Player")   // creates a new button with label "Hello World".
 {
@@ -35,7 +36,7 @@ MainWindow::MainWindow() :
   // When the button receives the "clicked" signal, it will call the
   // on_button_clicked() method defined below.
   new_player_confirm_button.signal_clicked().connect(sigc::mem_fun(*this,
-              &MainWindow::new_player_button_clicked));
+              &NewPlayerWindow::new_player_button_clicked));
 
   // Text entries setup
   new_player_name_entry.set_max_length(50);
@@ -50,11 +51,14 @@ MainWindow::MainWindow() :
 
   // This packs the buttons into the Horizontal Box and adds it to the vertical box
   // Then we add the Vertical Box in the Window (a container)
-  VBox.add(new_player_name_entry);
-  VBox.add(new_player_elo_entry);
-  VBox.add(new_player_kcoeff_entry);
-  HBox.add(new_player_confirm_button);
-  VBox.add(HBox);
+  HBox_entries.add(new_player_name_entry);
+  HBox_entries.add(new_player_elo_entry);
+  HBox_entries.add(new_player_kcoeff_entry);
+  HBox_entries.set_spacing(10);
+  HBox_entries.set_homogeneous(false);
+  HBox_confirm_button.add(new_player_confirm_button);
+  VBox.add(HBox_entries);
+  VBox.add(HBox_confirm_button);
   Gtk::Window::add(VBox);
 
   // The final step is to display this newly created widget...
@@ -63,7 +67,7 @@ MainWindow::MainWindow() :
   Gtk::Window::show_all_children();
 }
 
-void MainWindow::new_player_button_clicked()
+void NewPlayerWindow::new_player_button_clicked()
 {
   std::cout << "Hello World" << std::endl;
   std::cout << "Player name : " << this->new_player_name_entry.get_text() << std::endl;
@@ -76,8 +80,8 @@ int main (int argc, char *argv[])
 {
   auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
 
-  MainWindow main_window;
+  NewPlayerWindow new_player_window;
 
   //Shows the window and returns when it is closed.
-  return (app->run(main_window));
+  return (app->run(new_player_window));
 }
