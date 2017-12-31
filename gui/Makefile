@@ -18,9 +18,9 @@ SRCS	= main_window.cpp
 OBJS	= $(SRCS:.cpp=.o)
 
 CPPFLAGS += -std=c++14 -W -Wall -I include
-CPPFLAGS += `pkg-config --cflags gtkmm-3.0`
+CPPFLAGS += `pkg-config gtkmm-3.0 --cflags`
 
-LDFLAGS	= `pkg-config --libs gtkmm-3.0`
+LDFLAGS	= `pkg-config gtkmm-3.0 --libs`
 
 all: $(NAME)
 
