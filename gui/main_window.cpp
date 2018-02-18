@@ -1,11 +1,12 @@
 #include <iostream>
 #include <gtkmm.h>
+#include "main.hpp"
 
-class TreeView_WithPopup : public Gtk::TreeView
+class MainTreeView : public Gtk::TreeView
 {
 public:
-  TreeView_WithPopup();
-  virtual ~TreeView_WithPopup();
+  MainTreeView();
+  virtual ~MainTreeView();
 
 protected:
   // Override Signal handler:
@@ -17,6 +18,7 @@ protected:
   void on_menu_file_popup_add_result();
   void on_menu_file_popup_remove_player();
 
+  void updateTreeView();
 
   //Tree model columns:
   class ModelColumns : public Gtk::TreeModel::ColumnRecord
@@ -40,13 +42,9 @@ protected:
   Gtk::Menu m_Menu_Popup;
 };
 
-TreeView_WithPopup::TreeView_WithPopup()
+void MainTreeView::updateTreeView()
 {
-  //Create the Tree model:
-  m_refTreeModel = Gtk::ListStore::create(m_Columns);
-  set_model(m_refTreeModel);
-
-  //Fill the TreeView's model
+  // FILL THE TREEVIEW FROM THE MAIN PLAYERS LIST
   Gtk::TreeModel::Row row = *(m_refTreeModel->append());
   row[m_Columns.m_col_id] = 1;
   row[m_Columns.m_col_name] = "right-click on this";
@@ -64,6 +62,16 @@ TreeView_WithPopup::TreeView_WithPopup()
   row[m_Columns.m_col_name] = "or this, for a popup context menu";
   row[m_Columns.m_col_elo] = 1000;
   row[m_Columns.m_col_kcoeff] = 40;
+}
+
+MainTreeView::MainTreeView()
+{
+  //Create the Tree model:
+  m_refTreeModel = Gtk::ListStore::create(m_Columns);
+  set_model(m_refTreeModel);
+
+  //Fill the TreeView's model
+  updateTreeView();
 
   //Add the TreeView's view columns:
   append_column("ID", m_Columns.m_col_id);
@@ -74,28 +82,28 @@ TreeView_WithPopup::TreeView_WithPopup()
   //Fill popup menu:
   auto item = Gtk::manage(new Gtk::MenuItem("_Edit", true));
   item->signal_activate().connect(
-    sigc::mem_fun(*this, &TreeView_WithPopup::on_menu_file_popup_edit_player) );
+    sigc::mem_fun(*this, &MainTreeView::on_menu_file_popup_edit_player) );
   m_Menu_Popup.append(*item);
 
-  item = Gtk::manage(new Gtk::MenuItem("Add a _Result", true));
+  item = Gtk::manage(new Gtk::MenuItem("_Add a Result", true));
   item->signal_activate().connect(
-    sigc::mem_fun(*this, &TreeView_WithPopup::on_menu_file_popup_add_result) );
+    sigc::mem_fun(*this, &MainTreeView::on_menu_file_popup_add_result) );
   m_Menu_Popup.append(*item);
 
   item = Gtk::manage(new Gtk::MenuItem("_Remove", true));
   item->signal_activate().connect(
-    sigc::mem_fun(*this, &TreeView_WithPopup::on_menu_file_popup_remove_player) );
+    sigc::mem_fun(*this, &MainTreeView::on_menu_file_popup_remove_player) );
   m_Menu_Popup.append(*item);
 
   m_Menu_Popup.accelerate(*this);
   m_Menu_Popup.show_all(); //Show all menu items when the menu pops up
 }
 
-TreeView_WithPopup::~TreeView_WithPopup()
+MainTreeView::~MainTreeView()
 {
 }
 
-bool TreeView_WithPopup::on_button_press_event(GdkEventButton* button_event)
+bool MainTreeView::on_button_press_event(GdkEventButton* button_event)
 {
   bool return_value = false;
 
@@ -117,7 +125,7 @@ bool TreeView_WithPopup::on_button_press_event(GdkEventButton* button_event)
   return return_value;
 }
 
-void TreeView_WithPopup::on_menu_file_popup_edit_player()
+void MainTreeView::on_menu_file_popup_edit_player()
 {
   std::cout << "Edit Player was selected." << std::endl;
 
@@ -133,7 +141,7 @@ void TreeView_WithPopup::on_menu_file_popup_edit_player()
   }
 }
 
-void TreeView_WithPopup::on_menu_file_popup_add_result()
+void MainTreeView::on_menu_file_popup_add_result()
 {
   std::cout << "Add a Result was selected." << std::endl;
 
@@ -149,7 +157,7 @@ void TreeView_WithPopup::on_menu_file_popup_add_result()
   }
 }
 
-void TreeView_WithPopup::on_menu_file_popup_remove_player()
+void MainTreeView::on_menu_file_popup_remove_player()
 {
   std::cout << "Remove Player was selected." << std::endl;
 
@@ -165,11 +173,11 @@ void TreeView_WithPopup::on_menu_file_popup_remove_player()
   }
 }
 
-class ExampleWindow : public Gtk::ApplicationWindow
+class MainWindow : public Gtk::ApplicationWindow
 {
 public:
-  ExampleWindow();
-  virtual ~ExampleWindow();
+  MainWindow();
+  virtual ~MainWindow();
 
 protected:
 
@@ -180,10 +188,10 @@ protected:
   Glib::RefPtr<Gtk::Builder> m_refBuilder;
 
   Gtk::ScrolledWindow m_ScrolledWindow;
-  TreeView_WithPopup m_TreeView;
+  MainTreeView m_TreeView;
 };
 
-ExampleWindow::ExampleWindow()
+MainWindow::MainWindow()
 : Gtk::ApplicationWindow(),
   m_Box(Gtk::ORIENTATION_VERTICAL)
 {
@@ -191,7 +199,7 @@ ExampleWindow::ExampleWindow()
   set_border_width(5);
   set_default_size(450, 600);
 
-  // ExampleApplication displays the menubar. Other stuff, such as a toolbar,
+  // MainApplication displays the menubar. Other stuff, such as a toolbar,
   // is put into the box.
   add(m_Box);
 
@@ -356,17 +364,17 @@ ExampleWindow::ExampleWindow()
   show_all_children();
 }
 
-ExampleWindow::~ExampleWindow()
+MainWindow::~MainWindow()
 {
 }
 
-class ExampleApplication : public Gtk::Application
+class MainApplication : public Gtk::Application
 {
 protected:
-  ExampleApplication();
+  MainApplication();
 
 public:
-  static Glib::RefPtr<ExampleApplication> create();
+  static Glib::RefPtr<MainApplication> create();
 
 protected:
   //Overrides of default signal handlers:
@@ -398,18 +406,18 @@ private:
   Glib::RefPtr<Gtk::Builder> m_refBuilder;
 };
 
-ExampleApplication::ExampleApplication()
+MainApplication::MainApplication()
 : Gtk::Application("org.gtkmm.example.main_menu")
 {
   Glib::set_application_name("Main Menu Example");
 }
 
-Glib::RefPtr<ExampleApplication> ExampleApplication::create()
+Glib::RefPtr<MainApplication> MainApplication::create()
 {
-  return Glib::RefPtr<ExampleApplication>(new ExampleApplication());
+  return Glib::RefPtr<MainApplication>(new MainApplication());
 }
 
-void ExampleApplication::on_startup()
+void MainApplication::on_startup()
 {
   //Call the base class's implementation:
   Gtk::Application::on_startup();
@@ -418,20 +426,20 @@ void ExampleApplication::on_startup()
   //We can use add_action() because Gtk::Application derives from Gio::ActionMap.
 
   //File menu:
-  add_action("newlist", sigc::mem_fun(*this, &ExampleApplication::on_menu_file_new_list));
-  add_action("openlist", sigc::mem_fun(*this, &ExampleApplication::on_menu_file_open_list));
-  add_action("save", sigc::mem_fun(*this, &ExampleApplication::on_menu_file_save_list));
-  add_action("saveas", sigc::mem_fun(*this, &ExampleApplication::on_menu_file_save_list_as));
-  add_action("quit", sigc::mem_fun(*this, &ExampleApplication::on_menu_file_quit));
+  add_action("newlist", sigc::mem_fun(*this, &MainApplication::on_menu_file_new_list));
+  add_action("openlist", sigc::mem_fun(*this, &MainApplication::on_menu_file_open_list));
+  add_action("save", sigc::mem_fun(*this, &MainApplication::on_menu_file_save_list));
+  add_action("saveas", sigc::mem_fun(*this, &MainApplication::on_menu_file_save_list_as));
+  add_action("quit", sigc::mem_fun(*this, &MainApplication::on_menu_file_quit));
 
   //Players manu:
-  add_action("add_player", sigc::mem_fun(*this, &ExampleApplication::on_menu_players_add));
-  add_action("remove_player", sigc::mem_fun(*this, &ExampleApplication::on_menu_players_remove));
-  add_action("add_result", sigc::mem_fun(*this, &ExampleApplication::on_menu_players_result));
+  add_action("add_player", sigc::mem_fun(*this, &MainApplication::on_menu_players_add));
+  add_action("remove_player", sigc::mem_fun(*this, &MainApplication::on_menu_players_remove));
+  add_action("add_result", sigc::mem_fun(*this, &MainApplication::on_menu_players_result));
 
   //Help menu:
-  add_action("how", sigc::mem_fun(*this, &ExampleApplication::on_menu_help_how));
-  add_action("about", sigc::mem_fun(*this, &ExampleApplication::on_menu_help_about));
+  add_action("how", sigc::mem_fun(*this, &MainApplication::on_menu_help_how));
+  add_action("about", sigc::mem_fun(*this, &MainApplication::on_menu_help_about));
 
   m_refBuilder = Gtk::Builder::create();
 
@@ -528,7 +536,7 @@ void ExampleApplication::on_startup()
   }
 }
 
-void ExampleApplication::on_activate()
+void MainApplication::on_activate()
 {
   // std::cout << "debug1: " << G_STRFUNC << std::endl;
   // The application has been started, so let's show a window.
@@ -537,9 +545,9 @@ void ExampleApplication::on_activate()
   create_window();
 }
 
-void ExampleApplication::create_window()
+void MainApplication::create_window()
 {
-  auto win = new ExampleWindow();
+  auto win = new MainWindow();
 
   //Make sure that the application runs for as long this window is still open:
   add_window(*win);
@@ -547,37 +555,37 @@ void ExampleApplication::create_window()
   //Delete the window when it is hidden.
   //That's enough for this simple example.
   win->signal_hide().connect(sigc::bind<Gtk::Window*>(
-    sigc::mem_fun(*this, &ExampleApplication::on_window_hide), win));
+    sigc::mem_fun(*this, &MainApplication::on_window_hide), win));
 
   win->show_all();
 }
 
-void ExampleApplication::on_window_hide(Gtk::Window* window)
+void MainApplication::on_window_hide(Gtk::Window* window)
 {
   delete window;
 }
 
-void ExampleApplication::on_menu_file_new_list()
+void MainApplication::on_menu_file_new_list()
 {
   std::cout << "New list must be created." << '\n';
 }
 
-void ExampleApplication::on_menu_file_open_list()
+void MainApplication::on_menu_file_open_list()
 {
   std::cout << "Open a list." << '\n';
 }
 
-void ExampleApplication::on_menu_file_save_list()
+void MainApplication::on_menu_file_save_list()
 {
   std::cout << "Save current list." << '\n';
 }
 
-void ExampleApplication::on_menu_file_save_list_as()
+void MainApplication::on_menu_file_save_list_as()
 {
   std::cout << "Save current list as..." << '\n';
 }
 
-void ExampleApplication::on_menu_file_quit()
+void MainApplication::on_menu_file_quit()
 {
   std::cout << G_STRFUNC << std::endl;
   quit(); // Not really necessary, when Gtk::Widget::hide() is called.
@@ -600,34 +608,45 @@ void ExampleApplication::on_menu_file_quit()
   }
 }
 
-void ExampleApplication::on_menu_players_add()
+void MainApplication::on_menu_players_add()
 {
   std::cout << "App|Players|Add was selected." << std::endl;
+  auto win = new NewPlayerWindow();
+
+  //Make sure that the application runs for as long this window is still open:
+  add_window(*win);
+
+  //Delete the window when it is hidden.
+  //That's enough for this simple example.
+  win->signal_hide().connect(sigc::bind<Gtk::Window*>(
+    sigc::mem_fun(*this, &MainApplication::on_window_hide), win));
+
+  win->show_all();
 }
 
-void ExampleApplication::on_menu_players_remove()
+void MainApplication::on_menu_players_remove()
 {
   std::cout << "App|Players|Remove was selected." << std::endl;
 }
 
-void ExampleApplication::on_menu_players_result()
+void MainApplication::on_menu_players_result()
 {
   std::cout << "App|Players|Results was selected." << std::endl;
 }
 
-void ExampleApplication::on_menu_help_how()
+void MainApplication::on_menu_help_how()
 {
   std::cout << "App|Help|How to Use was selected." << std::endl;
 }
 
-void ExampleApplication::on_menu_help_about()
+void MainApplication::on_menu_help_about()
 {
   std::cout << "App|Help|About was selected." << std::endl;
 }
 
 int main(int argc, char* argv[])
 {
-  auto application = ExampleApplication::create();
+  auto application = MainApplication::create();
 
   // Start the application, showing the initial window,
   // and opening extra windows for any files that it is asked to open,

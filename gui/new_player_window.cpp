@@ -3,31 +3,12 @@
 #include <gtkmm/window.h>*/
 #include <gtkmm.h>
 #include <iostream>
-
-class NewPlayerWindow : public Gtk::Window
-{
-protected:
-  //Signal handlers:
-  void new_player_button_clicked();
-
-  //Member widgets:
-  Gtk::Box VBox;
-  Gtk::Box HBox_entries;
-  Gtk::Box HBox_confirm_button;
-  Gtk::Entry new_player_name_entry;
-  Gtk::Entry new_player_elo_entry;
-  Gtk::Entry new_player_kcoeff_entry;
-  Gtk::Button new_player_confirm_button;
-
-public:
-  NewPlayerWindow();
-  virtual ~NewPlayerWindow() {}
-
-};
+#include "main.hpp"
 
 NewPlayerWindow::NewPlayerWindow() :
   VBox(Gtk::ORIENTATION_VERTICAL),
-  new_player_confirm_button("Add New Player")   // creates a new button with label "Hello World".
+  new_player_confirm_button("Add New Player"),   // creates a new button with label "Hello World".
+  new_player_cancel_button("Cancel")   // creates a new button with label "Hello World".
 {
   // Sets the border width and title of the window.
   Gtk::Window::set_border_width(10);
@@ -37,6 +18,10 @@ NewPlayerWindow::NewPlayerWindow() :
   // on_button_clicked() method defined below.
   new_player_confirm_button.signal_clicked().connect(sigc::mem_fun(*this,
               &NewPlayerWindow::new_player_button_clicked));
+
+  new_player_cancel_button.signal_clicked().connect(sigc::mem_fun(*this,
+              &NewPlayerWindow::cancel_button_clicked));
+
 
   // Text entries setup
   new_player_name_entry.set_max_length(50);
@@ -56,9 +41,10 @@ NewPlayerWindow::NewPlayerWindow() :
   HBox_entries.add(new_player_kcoeff_entry);
   HBox_entries.set_spacing(10);
   HBox_entries.set_homogeneous(false);
-  HBox_confirm_button.add(new_player_confirm_button);
+  HBox_buttons.add(new_player_cancel_button);
+  HBox_buttons.add(new_player_confirm_button);
   VBox.add(HBox_entries);
-  VBox.add(HBox_confirm_button);
+  VBox.add(HBox_buttons);
   Gtk::Window::add(VBox);
 
   // The final step is to display this newly created widget...
@@ -73,15 +59,19 @@ void NewPlayerWindow::new_player_button_clicked()
   std::cout << "Player name : " << this->new_player_name_entry.get_text() << std::endl;
   std::cout << "Player elo : " << this->new_player_elo_entry.get_text() << std::endl;
   std::cout << "Player kcoeff : " << this->new_player_kcoeff_entry.get_text() << std::endl;
-
 }
 
-int main (int argc, char *argv[])
+void NewPlayerWindow::cancel_button_clicked()
 {
-  auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
-
-  NewPlayerWindow new_player_window;
-
-  //Shows the window and returns when it is closed.
-  return (app->run(new_player_window));
+  std::cout << "Close me !\n";
 }
+
+// int main (int argc, char *argv[])
+// {
+//   auto app = Gtk::Application::create(argc, argv, "org.gtkmm.example");
+
+//   NewPlayerWindow new_player_window;
+
+//   //Shows the window and returns when it is closed.
+//   return (app->run(new_player_window));
+// }
