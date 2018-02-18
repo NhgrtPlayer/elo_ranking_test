@@ -621,6 +621,9 @@ void MainApplication::on_menu_players_add()
   win->signal_hide().connect(sigc::bind<Gtk::Window*>(
     sigc::mem_fun(*this, &MainApplication::on_window_hide), win));
 
+
+  win->set_modal(true);
+  win->set_transient_for(*this);
   win->show_all();
 }
 

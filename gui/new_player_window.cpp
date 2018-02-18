@@ -43,13 +43,11 @@ NewPlayerWindow::NewPlayerWindow() :
   HBox_entries.set_homogeneous(false);
   HBox_buttons.add(new_player_cancel_button);
   HBox_buttons.add(new_player_confirm_button);
+  HBox_buttons.set_spacing(10);
   VBox.add(HBox_entries);
   VBox.add(HBox_buttons);
   Gtk::Window::add(VBox);
 
-  // The final step is to display this newly created widget...
-  // new_player_confirm_button.show();
-  // new_player_name_entry.show();
   Gtk::Window::show_all_children();
 }
 
@@ -59,11 +57,14 @@ void NewPlayerWindow::new_player_button_clicked()
   std::cout << "Player name : " << this->new_player_name_entry.get_text() << std::endl;
   std::cout << "Player elo : " << this->new_player_elo_entry.get_text() << std::endl;
   std::cout << "Player kcoeff : " << this->new_player_kcoeff_entry.get_text() << std::endl;
+  std::cout << "Add this player and close me !\n";
+  Gtk::Window::close();
 }
 
 void NewPlayerWindow::cancel_button_clicked()
 {
   std::cout << "Close me !\n";
+  Gtk::Window::close();
 }
 
 // int main (int argc, char *argv[])
