@@ -5,13 +5,7 @@
 ** 4♦
 */
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <cmath>
-#include <algorithm>
-#include "Player.hpp"
+#include "main.h"
 
 const static int WIN_VAR = 1;
 const static int LOSE_VAR = 0;
@@ -21,7 +15,11 @@ void sort_ranking(std::vector<Player>& vec)
 {
 	std::sort( vec.begin( ), vec.end( ), [ ]( const Player& lhs, const Player& rhs )
 	{
-   		return (lhs.getElo() > rhs.getElo() || lhs.getName() > rhs.getName());
+		if (lhs.getElo() == rhs.getElo() && lhs.getName() == rhs.getName())
+			return (lhs.getID() > rhs.getID());
+		if (lhs.getElo() == rhs.getElo())
+			return (lhs.getName() > rhs.getName());
+		return (lhs.getElo() > rhs.getElo());
 	});
 }
 
@@ -82,19 +80,26 @@ int export_ranking(const std::vector<Player>& vec, const std::string& filename)
 	return (0);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-	std::vector<Player> players_list;
+  std::vector<Player> players_list;
 
-	players_list.push_back(Player("Wolfy", players_list.size(), 800, 40));
-	players_list.push_back(Player("Rog", players_list.size(), 1000, 40));
-	for (auto const &e : players_list)
-	{
-		std::cout << e << '\n';
-	}
-	update_elo(players_list[0], players_list[1]); // 0 wins vs 1
-	players_list.push_back(Player("Test", players_list.size(), 969, 40));
-	sort_ranking(players_list);
-	print_ranking(players_list);
-	return (0);
+  players_list.push_back(Player("Wolfy", players_list.size(), 800, 40));
+  players_list.push_back(Player("Rog", players_list.size(), 1000, 40));
+  for (auto const &e : players_list)
+  {
+	  std::cout << e << '\n';
+  }
+  update_elo(players_list[0], players_list[1]); // 0 wins vs 1
+  players_list.push_back(Player("Test", players_list.size(), 969, 40));
+  sort_ranking(players_list);
+  print_ranking(players_list);
+  auto application = MainApplication::create(players_list);
+
+  // Start the application, showing the initial window,
+  // and opening extra windows for any files that it is asked to open,
+  // for instance as a command-line parameter.
+  // run() will return when the last window has been closed by the user.
+  const int status = application->run(argc, argv);
+  return (status);
 }

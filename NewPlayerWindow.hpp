@@ -1,8 +1,11 @@
-#ifndef _MAIN_HPP_
-#define _MAIN_HPP_
+#ifndef _NEWPLAYERWINDOW_HPP_
+#define _NEWPLAYERWINDOW_HPP_
+
+#include "Player.hpp"
 
 class NewPlayerWindow : public Gtk::Window
 {
+  std::vector<Player>& players_list;
 protected:
   //Signal handlers:
   void new_player_button_clicked();
@@ -19,7 +22,7 @@ protected:
   Gtk::Button new_player_cancel_button;
 
 public:
-  NewPlayerWindow();
+  NewPlayerWindow(std::vector<Player>&);
   virtual ~NewPlayerWindow() {}
 
 };

@@ -3,12 +3,13 @@
 #include <gtkmm/window.h>*/
 #include <gtkmm.h>
 #include <iostream>
-#include "main.hpp"
+#include "NewPlayerWindow.hpp"
 
-NewPlayerWindow::NewPlayerWindow() :
+NewPlayerWindow::NewPlayerWindow(std::vector<Player>& players_list) :
   VBox(Gtk::ORIENTATION_VERTICAL),
   new_player_confirm_button("Add New Player"),   // creates a new button with label "Hello World".
-  new_player_cancel_button("Cancel")   // creates a new button with label "Hello World".
+  new_player_cancel_button("Cancel"),   // creates a new button with label "Hello World".
+  players_list(players_list)
 {
   // Sets the border width and title of the window.
   Gtk::Window::set_border_width(10);
@@ -21,7 +22,6 @@ NewPlayerWindow::NewPlayerWindow() :
 
   new_player_cancel_button.signal_clicked().connect(sigc::mem_fun(*this,
               &NewPlayerWindow::cancel_button_clicked));
-
 
   // Text entries setup
   new_player_name_entry.set_max_length(50);
@@ -53,6 +53,12 @@ NewPlayerWindow::NewPlayerWindow() :
 
 void NewPlayerWindow::new_player_button_clicked()
 {
+  this->players_list.push_back(Player(
+    this->new_player_name_entry.get_text().c_str(),
+    this->players_list.size(),
+    std::stoi(this->new_player_elo_entry.get_text().c_str()),
+    std::stoi(this->new_player_kcoeff_entry.get_text().c_str()))
+  );
   std::cout << "Hello World" << std::endl;
   std::cout << "Player name : " << this->new_player_name_entry.get_text() << std::endl;
   std::cout << "Player elo : " << this->new_player_elo_entry.get_text() << std::endl;

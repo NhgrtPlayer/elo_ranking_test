@@ -1,17 +1,31 @@
+##
+## Makefile
+##
+## Made by NhgrtPlayer
+## (⌐■_■)
+##
+## Beyond the Brain
+##
+
 CC	= g++
 
 RM	= rm -f
 
-NAME	= elo_rank
+NAME	= test_gui
 
 SRCS	= main.cpp \
+	  MainWindow.cpp \
+	  NewPlayerWindow.cpp \
+	  MainTreeView.cpp \
+	  MainApplication.cpp \
 	  Player.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CFLAGS	= -W -Wall -Werror -I include
+CPPFLAGS += -std=c++14 -W -Wall -I include
+CPPFLAGS += `pkg-config gtkmm-3.0 --cflags`
 
-LDFLAGS	= 
+LDFLAGS	= `pkg-config gtkmm-3.0 --libs`
 
 all: $(NAME)
 
