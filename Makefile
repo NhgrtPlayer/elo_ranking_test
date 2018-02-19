@@ -13,16 +13,16 @@ RM	= rm -f
 
 NAME	= test_gui
 
-SRCS	= main.cpp \
-	  MainWindow.cpp \
-	  NewPlayerWindow.cpp \
-	  MainTreeView.cpp \
-	  MainApplication.cpp \
-	  Player.cpp
+SRCS	= source/main.cpp \
+	  source/MainWindow.cpp \
+	  source/NewPlayerWindow.cpp \
+	  source/MainTreeView.cpp \
+	  source/MainApplication.cpp \
+	  source/Player.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CPPFLAGS += -std=c++14 -W -Wall -I include
+CPPFLAGS += -std=c++14 -W -Wall -I header
 CPPFLAGS += `pkg-config gtkmm-3.0 --cflags`
 
 LDFLAGS	= `pkg-config gtkmm-3.0 --libs`
