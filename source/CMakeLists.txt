@@ -1,4 +1,4 @@
-set(CMAKE_CXX_FLAGS "-W -Wall -Wextra -Werror -std=c++17")
+set(CMAKE_CXX_FLAGS "-W -Wall -std=c++14")
 
 link_directories(
     ${GTKMM_LIBRARY_DIRS}  )
